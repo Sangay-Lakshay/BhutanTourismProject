@@ -25,6 +25,8 @@ with col2:
 
 if st.button("Predict"):
     with open('model.pkl', 'rb') as f:
-        loaded_model = pickle.load(f)       
-        prediction = loaded_model.predict(np.array([int(year), AirTravel, LandTravel, TravelExpendeture, PassengerTransportExpendeture, NumberOfEstablishments, NumberOfRooms, NumberOfBedPlaces]).reshape(1, -1));
-        st.info('Prediction for Overnight Visitors: {}'.format(math.ceil(prediction[0])))   
+        loaded_model = pickle.load(f)   
+        df = np.array([int(year), AirTravel, LandTravel, TravelExpendeture, PassengerTransportExpendeture, NumberOfEstablishments, NumberOfRooms, NumberOfBedPlaces]).reshape(1, -1)
+        df1 = pd.DataFrame(df, columns = ['year', 'Air(Travel)', 'Land(Travel)', 'TravelExpendeture(US$ Millions)', 'PassengerTransportExpendeture(US$ Millions)', 'Number of establishments', 'Number of rooms', 'Number of bed-places'])
+        prediction = loaded_model.predict(df1)
+        st.info('Prediction for Overnight Visitors: {}'.format(math.ceil(prediction[0])))
